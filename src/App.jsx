@@ -1,121 +1,93 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
 import './App.css'
+import seattleImg from './assets/seattle.jpg'
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Welcome! I'm Ayush, nice to meet you!</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
+    <div className="portfolio">
+      <header className="navbar">
+        <a href="#" className="logo">
+          ayush<span>.</span>
+        </a>
+
+        <nav aria-label="Main navigation">
+          <a href="#">Home</a>
+          <a href="#about">About</a>
+          <a href="#skills">Skills</a>
+          <a href="#contact" className="hello-button">Say hello</a>
+        </nav>
+      </header>
+
+      <main>
+        <section className="hero">
+          <div className="hero-text">
+            <p className="badge">● LEARNING & BUILDING</p>
+
+            <p className="greeting">Hi, I'm</p>
+            <h1>Ayush Jain.</h1>
+
+            <p className="school">
+              Computer Science @ University of Maryland
+            </p>
+
+            <p className="hometown">From Seattle to College Park.</p>
+
+            <p className="description">
+              I'm learning to turn ideas into thoughtful digital
+              experiences, one project at a time.
+            </p>
+
+            <div className="buttons">
+              <a href="#about" className="button primary">
+                About me →
+              </a>
+              <a href="#contact" className="button secondary">
+                Get in touch
+              </a>
+            </div>
+
+            <div id="skills" className="skills">
+              <h2>CURRENTLY LEARNING</h2>
+              <div className="skill-tags">
+                <span>HTML</span>
+                <span>CSS</span>
+                <span>React</span>
+              </div>
+            </div>
+          </div>
+
+          <figure className="hero-image">
+            <img
+              src={seattleImg}
+              alt="Seattle skyline featuring the Space Needle"
+            />
+            <figcaption>
+              ● Seattle roots. New beginnings.
+            </figcaption>
+          </figure>
+        </section>
+
+        <section id="about" className="about">
+          <div>
+            <p className="section-label">01 / ABOUT ME</p>
+            <h2>Curious by nature.</h2>
+          </div>
+
+          <p className="description">
+            A CS student exploring web development, AI, and the ideas
+            that connect technology with people.
           </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+        </section>
 
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
+        <section id="contact" className="contact">
+          <p className="section-label">02 / CONTACT</p>
+          <h2>Let's connect.</h2>
+          <p className="description">
+            Interested in learning and building something together?
+          </p>
+          <a href="mailto:you@example.com">Send me an email →</a>
+        </section>
+      </main>
+    </div>
   )
 }
 
