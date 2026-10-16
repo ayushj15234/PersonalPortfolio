@@ -14,8 +14,17 @@
 }
 
 .logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border: 1px solid #53dda5;
+  border-radius: 12px;
+  color: #53dda5;
   font-size: 28px;
-  font-weight: bold;
+  font-weight: 400;
+  line-height: 1;
 }
 
 .logo span {
@@ -46,22 +55,18 @@ nav a:hover {
 /* Main introduction */
 .hero {
   display: grid;
-  grid-template-columns: 1.1fr 1fr;
+  grid-template-columns: 1.1fr 1.5fr;
   align-items: center;
-  gap: 60px;
+  gap: 40px;
   padding: 60px 0;
 }
 
 .badge {
-  display: inline-block;
   margin-bottom: 28px;
-  padding: 7px 16px;
-  border: 1px solid #245340;
-  border-radius: 30px;
-  background: #10251e;
   color: #53dda5;
+  font-family: Consolas, monospace;
   font-size: 12px;
-  font-weight: bold;
+  letter-spacing: 1px;
 }
 
 .greeting {
@@ -70,9 +75,11 @@ nav a:hover {
 
 h1 {
   margin: 8px 0 20px;
-  font-size: clamp(46px, 5.5vw, 80px);
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(48px, 6vw, 84px);
+  font-weight: 400;
   line-height: 1.1;
-  letter-spacing: -2px;
+  letter-spacing: -3px;
 }
 
 .school {
@@ -148,18 +155,17 @@ h1 {
 
 /* Photo */
 .hero-image {
-  position: relative;
-  min-width: 0;
-  margin: 0 0 24px;
+  margin-top: 12px;
+  color: #96a4b7;
+  font-size: 13px
 }
 
 .hero-image img {
   display: block;
   width: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
+  height: auto;
   border: 1px solid #233141;
-  border-radius: 24px;
+  border-radius: 12px;
 }
 
 .hero-image figcaption {
