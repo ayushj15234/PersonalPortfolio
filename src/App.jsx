@@ -53,7 +53,6 @@ function App() {
                 <span>CSS</span>
                 <span>JavaScript</span>
                 <span>React</span>
-                <span>Node.js</span>
                 <span>Github</span>
               </div>
             </div>
