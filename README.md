@@ -1,5 +1,17 @@
 # React + Vite
 
+## Adding portfolio projects
+
+Edit `src/data/projects.js` and add objects to the exported `projects` array.
+The file includes a commented example. Each project needs a `title` and
+`description`; give each a unique `id` as well. Optional fields are `category`,
+`tags`, `image`, `liveUrl`, `githubUrl`, and `details`.
+
+Place screenshots in `public/projects/` and reference them with a path such as
+`/projects/my-app.png`. Use full `https://` addresses for project links.
+Category filters appear automatically when there are at least two categories.
+The section displays a coming-soon state while the array is empty.
+
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:
