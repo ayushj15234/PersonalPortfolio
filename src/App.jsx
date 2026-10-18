@@ -84,7 +84,7 @@ function App() {
             </div>
           </div>
           <figure className="hero-image" onPointerMove={tiltPhoto} onPointerLeave={event => { event.currentTarget.style.setProperty('--tilt-x', '0deg'); event.currentTarget.style.setProperty('--tilt-y', '0deg') }}>
-            <div className="photo-frame"><img src={seattleImg} alt="Seattle skyline featuring the Space Needle" width="641" height="360" fetchPriority="high" /></div>
+            <div className="photo-frame"><img src={seattleImg} alt="Seattle skyline featuring the Space Needle" width="612" height="408" fetchPriority="high" /></div>
           </figure>
         </section>
         <section id="about" className="about section" aria-labelledby="about-title">
