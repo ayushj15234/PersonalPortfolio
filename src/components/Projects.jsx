@@ -13,10 +13,8 @@ export default function Projects({ projects = [] }) {
 
   return (
     <section id="projects" className="projects section" aria-labelledby="projects-title">
-      <div className="section-heading">
-        <div>
-          <h2 id="projects-title">Projects</h2>
-        </div>
+      <div className="section-heading" data-reveal>
+        <h2 id="projects-title">Things I&apos;ve <em>built</em></h2>
         {categories.length > 2 && (
           <div className="project-filters" aria-label="Filter projects">
             {categories.map(category => <button type="button" key={category} aria-pressed={filter === category} onClick={() => setFilter(category)}>{category}</button>)}
@@ -24,15 +22,15 @@ export default function Projects({ projects = [] }) {
         )}
       </div>
       {projects.length === 0 ? (
-        <div className="projects-empty">
+        <div className="projects-empty card" data-reveal>
           <svg className="project-symbol" width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="5" y="8" width="38" height="32" rx="5" /><path d="M5 17h38M12 12.5h.1m4 0h.1M18 24l-5 5 5 5m12-10 5 5-5 5m-5-12-3 14" /></svg>
           <div><h3>More to come</h3><p>Projects, experiments, and the things I learn along the way.</p></div>
           <span className="coming-soon">Coming soon</span>
         </div>
       ) : (
-        <div className="project-list" aria-live="polite">
+        <div className="project-list" aria-live="polite" data-reveal>
           {visibleProjects.map(project => (
-            <article className={`project ${project.image ? 'has-image' : ''}`} key={project.id || project.title}>
+            <article className={`project card ${project.image ? 'has-image' : ''}`} key={project.id || project.title}>
               {project.image && <div className="project-image"><img src={project.image} alt={`${project.title} preview`} loading="lazy" /></div>}
               <div className="project-content">
                 {project.icon === 'mountain' && (
