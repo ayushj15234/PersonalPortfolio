@@ -255,7 +255,7 @@ h1.rise { animation-delay: 70ms; }
 .copy-email { justify-self: start; display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 8px 4px; border: 0; background: transparent; color: var(--muted); font: 13px/1.6 var(--ui-font); }
 .copy-email:hover { color: var(--green); }
 .copy-status { min-height: 1.6em; color: var(--green); font: 13px/1.6 var(--ui-font); }
-footer { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 20px 0; border-top: 1px solid var(--line); color: #8193a8; font: 12px/1.6 var(--ui-font); }
+footer { display: flex; align-items: center; justify-content: flex-end; gap: 24px; padding: 20px 0; border-top: 1px solid var(--line); color: #8193a8; font: 12px/1.6 var(--ui-font); }
 footer a { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; }
 footer .arrow-icon { transform: rotate(-90deg); }
 footer a:hover { color: var(--green); }

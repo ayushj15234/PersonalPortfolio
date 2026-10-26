@@ -88,7 +88,7 @@ function App() {
     <div className="portfolio">
       <a className="skip-link" href="#main">Skip to content</a>
       <header className="navbar">
-        <a href="#home" className="logo" aria-label="AJ — Home" onClick={() => setMenuOpen(false)}>A<span className="upright-j">J</span></a>
+        <a href="#home" className="logo" aria-label="AJ — Home" onClick={() => setMenuOpen(false)}><span>A<span className="upright-j">J</span></span></a>
         <button className="menu-toggle" type="button" aria-expanded={menuOpen} aria-controls="main-nav" onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? 'Close' : 'Menu'}<span className={menuOpen ? 'menu-lines open' : 'menu-lines'} aria-hidden="true" /></button>
         <nav id="main-nav" className={menuOpen ? 'is-open' : ''} aria-label="Main navigation" onKeyDown={event => { if (event.key === 'Escape') { setMenuOpen(false); document.querySelector('.menu-toggle').focus() } }}>
           {navigation.map(([id, label]) => <a key={id} href={`#${id}`} className={`${id === 'contact' ? 'hello-button' : ''} ${activeSection === id ? 'active' : ''}`} aria-current={activeSection === id ? 'location' : undefined} onClick={() => { setMenuOpen(false); setActiveSection(id) }}>{label}</a>)}
@@ -153,7 +153,6 @@ function App() {
         </section>
       </main>
       <footer>
-        <span>© {new Date().getFullYear()} Ayush Jain</span>
         <a href="#home">Back to top <Arrow /></a>
       </footer>
     </div>
