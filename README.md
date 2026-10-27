@@ -11,7 +11,6 @@ A full-stack personal website showcasing my background, technical skills, and pr
 - **Contact form:** Visitor messages are sent through Resend, with Pydantic validation, a hidden honeypot field, and IP-based rate limiting.
 - **Interactive navigation:** Scroll-aware section highlighting, animated section reveals, and a collapsible navigation menu.
 - **Accessible interactions:** Skip navigation, descriptive labels, form error messages, and loading and retry states.
-- **Seattle-inspired visuals:** Skyline imagery and custom styling reflecting my hometown.
 
 ## Tech Stack
 
@@ -168,10 +167,6 @@ Project entries support `id`, `title`, `description`, `category`, `tags`, `image
 Deploy the frontend and backend separately. Set `VITE_API_URL` to the deployed backend URL before building the frontend, and add the deployed frontend origin to the backend's comma-separated `ALLOWED_ORIGINS` setting.
 
 Keep `RESEND_API_KEY`, `CONTACT_TO`, and `CONTACT_FROM` in the backend environment. The current in-memory rate limiter is intended for a single server process; a multi-instance deployment needs shared rate-limit storage.
-
-## Author
-
-**Ayush Jain** — Computer Science student at the University of Maryland, interested in building useful products at the intersection of technology and business.
 
 ## License
 
