@@ -3,38 +3,23 @@ import './App.css'
 import seattleImg from './assets/seattle.jpg'
 import Arrow from './components/Arrow'
 import ContactForm from './components/ContactForm'
-import LoadState from './components/LoadState'
 import Projects from './components/Projects'
-import { loadPortfolio } from './api'
+import { projects } from './data/projects'
 
 const navigation = [['skills', 'Skills'], ['about', 'About'], ['projects', 'Projects'], ['contact', 'Contact me']]
 const email = 'ayushj8@terpmail.umd.edu'
 const github = 'https://github.com/ayushj15234'
-// The data comes from the API; the icons stay here because they're design, not data.
-const skillIcons = {
-  Languages: 'M8 6 2 12l6 6m8-12 6 6-6 6m-2-14-4 16',
-  Frameworks: 'M12 3 3 8l9 5 9-5-9-5Zm-9 9 9 5 9-5M3 16l9 5 9-5',
-  Tools: 'M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2.4-.6-.6-2.4 2.6-2.6Z',
-}
+const skills = [
+  ['Languages', 'What I write in', ['Java', 'Python', 'HTML', 'CSS', 'TypeScript', 'JavaScript'], 'M8 6 2 12l6 6m8-12 6 6-6 6m-2-14-4 16'],
+  ['Frameworks', 'What I build with', ['React', 'React Native', 'Expo', 'Node.js', 'JUnit', 'FastAPI'], 'M12 3 3 8l9 5 9-5-9-5Zm-9 9 9 5 9-5M3 16l9 5 9-5'],
+  ['Tools', 'What I work in', ['Eclipse', 'GitHub', 'VS Code', 'Microsoft Office Suite', 'IntelliJ'], 'M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2.4-.6-.6-2.4 2.6-2.6Z'],
+]
 
 function App() {
-  const [portfolio, setPortfolio] = useState({ status: 'loading', skills: [], projects: [] })
   const [activeSection, setActiveSection] = useState('home')
   const [menuOpen, setMenuOpen] = useState(false)
   const [copyStatus, setCopyStatus] = useState('')
   const copyTimer = useRef(null)
-
-  // Ask the backend for skills and projects once, when the page opens.
-  useEffect(() => {
-    let active = true
-    loadPortfolio().then(data => { if (active) setPortfolio(data) })
-    return () => { active = false }
-  }, [])
-
-  function retryLoad() {
-    setPortfolio(current => ({ ...current, status: 'loading' }))
-    loadPortfolio().then(setPortfolio)
-  }
 
   useEffect(() => {
     let frame = 0
@@ -130,13 +115,12 @@ function App() {
 
         <section id="skills" className="skills section" aria-labelledby="skills-title">
           <h2 id="skills-title" data-reveal>My <em>toolkit</em></h2>
-          {portfolio.status !== 'ready' && <LoadState status={portfolio.status} what="skills" onRetry={retryLoad} />}
           <div className="skill-boxes" data-reveal>
-            {portfolio.skills.map(({ category, description, items }) => (
-              <article className="card skill-box" key={category}>
-                {skillIcons[category] && <svg className="skill-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={skillIcons[category]} /></svg>}
-                <h3>{category}</h3>
-                <p>{description}</p>
+            {skills.map(([group, note, items, icon]) => (
+              <article className="card skill-box" key={group}>
+                <svg className="skill-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={icon} /></svg>
+                <h3>{group}</h3>
+                <p>{note}</p>
                 <ul className="skill-tags">{items.map(skill => <li key={skill}>{skill}</li>)}</ul>
               </article>
             ))}
@@ -154,7 +138,7 @@ function App() {
           </div>
         </section>
 
-        <Projects projects={portfolio.projects} status={portfolio.status} onRetry={retryLoad} />
+        <Projects projects={projects} />
 
         <section id="contact" className="contact section" aria-labelledby="contact-title">
           <div className="contact-actions" data-reveal>

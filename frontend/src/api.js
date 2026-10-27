@@ -1,12 +1,6 @@
 // Where the FastAPI server lives. Set VITE_API_URL for the live site (step 7).
 export const API_URL = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'
 
-async function getJson(path) {
-  const response = await fetch(`${API_URL}${path}`)
-  if (!response.ok) throw new Error(`${path} returned ${response.status}`)
-  return response.json()
-}
-
 const fieldHelp = {
   name: 'Please enter your name.',
   email: 'Please enter a valid email address, like name@example.com.',
@@ -33,9 +27,3 @@ export async function sendContact(form) {
   }
 }
 
-// Never rejects: a failed request comes back as status 'error' so the page can show it.
-export function loadPortfolio() {
-  return Promise.all([getJson('/api/skills'), getJson('/api/projects')])
-    .then(([skills, projects]) => ({ status: 'ready', skills, projects }))
-    .catch(() => ({ status: 'error', skills: [], projects: [] }))
-}

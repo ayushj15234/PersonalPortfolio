@@ -1,13 +1,12 @@
 import { useState } from 'react'
 import Arrow from './Arrow'
-import LoadState from './LoadState'
 
 function ProjectLink({ href, children }) {
   if (!href || !/^https?:\/\//i.test(href)) return null
   return <a href={href} target="_blank" rel="noopener noreferrer">{children}<Arrow diagonal /><span className="sr-only"> (opens in a new tab)</span></a>
 }
 
-export default function Projects({ projects = [], status = 'ready', onRetry }) {
+export default function Projects({ projects }) {
   const [filter, setFilter] = useState('All')
   const categories = ['All', ...new Set(projects.map(project => project.category).filter(Boolean))]
   const visibleProjects = filter === 'All' ? projects : projects.filter(project => project.category === filter)
@@ -22,9 +21,7 @@ export default function Projects({ projects = [], status = 'ready', onRetry }) {
           </div>
         )}
       </div>
-      {status !== 'ready' ? (
-        <LoadState status={status} what="projects" onRetry={onRetry} />
-      ) : projects.length === 0 ? (
+      {projects.length === 0 ? (
         <div className="projects-empty card">
           <svg className="project-symbol" width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="5" y="8" width="38" height="32" rx="5" /><path d="M5 17h38M12 12.5h.1m4 0h.1M18 24l-5 5 5 5m12-10 5 5-5 5m-5-12-3 14" /></svg>
           <div><h3>More to come</h3><p>Projects, experiments, and the things I learn along the way.</p></div>

@@ -3,6 +3,7 @@ import os
 import time
 import urllib.error
 import urllib.request
+from datetime import datetime, timezone
 
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException, Request
@@ -26,24 +27,21 @@ app.add_middleware(
     allow_headers=["Content-Type"],
 )
 
-SKILLS = [
-    {"category": "Languages", "description": "What I write in", "items": ["Java", "Python", "HTML", "CSS", "TypeScript", "JavaScript"]},
-    {"category": "Frameworks", "description": "What I build with", "items": ["React", "React Native", "Expo", "Node.js", "JUnit", "FastAPI"]},
-    {"category": "Tools", "description": "What I work in", "items": ["Eclipse", "GitHub", "VS Code", "Microsoft Office Suite", "IntelliJ"]},
-]
 
-# Add a dictionary for each project. Optional fields the site understands:
-# category, tags (list), image ('/projects/my-app.png' in the site's public/projects/),
-# liveUrl, githubUrl, details. Leave description blank until you're ready.
-PROJECTS = [
-    {
-        "id": "viewpoint",
-        "title": "Viewpoint",
-        "icon": "mountain",
-        "description": "",
-        "githubUrl": "https://github.com/ayushj15234/Viewpoint",
-    },
-]
+class SkillGroup(BaseModel):
+    category: str
+    description: str
+    items: list[str]
+
+
+class Project(BaseModel):
+    id: str
+    title: str
+    description: str = ""
+    category: str | None = None
+    tags: list[str] = []
+    githubUrl: str | None = None
+    liveUrl: str | None = None
 
 
 class ContactMessage(BaseModel):
@@ -52,6 +50,26 @@ class ContactMessage(BaseModel):
     email: EmailStr
     message: str = Field(min_length=10, max_length=5000)
     website: str = ""  # hidden field that only bots fill in
+
+
+class SavedMessage(ContactMessage):
+    id: int
+    received_at: datetime
+
+
+# In-memory "database": anything not hardcoded here is lost when the server restarts.
+SKILLS = [
+    SkillGroup(category="Languages", description="What I write in", items=["Java", "Python", "HTML", "CSS", "TypeScript", "JavaScript"]),
+    SkillGroup(category="Frameworks", description="What I build with", items=["React", "React Native", "Expo", "Node.js", "JUnit", "FastAPI"]),
+    SkillGroup(category="Tools", description="What I work in", items=["Eclipse", "GitHub", "VS Code", "Microsoft Office Suite", "IntelliJ"]),
+]
+
+PROJECTS = [
+    Project(id="viewpoint", title="Viewpoint", category="Mobile apps", tags=["React Native", "Expo"], githubUrl="https://github.com/ayushj15234/Viewpoint"),
+    Project(id="portfolio", title="Personal Portfolio", category="Web apps", tags=["React", "FastAPI"], githubUrl="https://github.com/ayushj15234/PersonalPortfolio"),
+]
+
+MESSAGES: list[SavedMessage] = []
 
 
 # shortcut: per-process memory that resets on restart, fine for one small server; use Redis if it ever runs on several.
@@ -93,17 +111,28 @@ def health():
     return {"status": "ok"}
 
 
-@app.get("/api/skills")
+@app.get("/api/skills", response_model=list[SkillGroup])
 def get_skills():
     return SKILLS
 
 
-@app.get("/api/projects")
-def get_projects():
-    return PROJECTS
+# GET /api/projects?category=Web%20apps narrows the list; unknown categories return an empty list.
+@app.get("/api/projects", response_model=list[Project])
+def get_projects(category: str | None = None):
+    if category is None:
+        return PROJECTS
+    return [project for project in PROJECTS if project.category and project.category.lower() == category.lower()]
 
 
-@app.post("/api/contact")
+@app.get("/api/projects/{project_id}", response_model=Project, responses={404: {"description": "No project with that id"}})
+def get_project(project_id: str):
+    for project in PROJECTS:
+        if project.id == project_id:
+            return project
+    raise HTTPException(404, f"No project with id '{project_id}'.")
+
+
+@app.post("/api/contact", status_code=201, responses={429: {}, 502: {}, 503: {}})
 def contact(contact: ContactMessage, request: Request):
     if contact.website:
         return {"ok": True}  # pretend it worked so bots don't retry
@@ -116,4 +145,6 @@ def contact(contact: ContactMessage, request: Request):
     except (urllib.error.URLError, TimeoutError) as error:
         print(f"Email failed: {error}")
         raise HTTPException(502, "Your message couldn't be sent right now. Please try again or email me directly.")
-    return {"ok": True}
+    saved = SavedMessage(**contact.model_dump(), id=len(MESSAGES) + 1, received_at=datetime.now(timezone.utc))
+    MESSAGES.append(saved)
+    return {"ok": True, "id": saved.id}
