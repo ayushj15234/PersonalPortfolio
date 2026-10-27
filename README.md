@@ -1,6 +1,6 @@
 # Ayush Jain | Personal Portfolio
 
-A full-stack personal website showcasing my background, technical skills, and projects as a Computer Science student at the University of Maryland. Built with a React frontend and a Python/FastAPI backend, the site combines a Seattle-inspired design with API-driven content and an integrated contact form.
+A full-stack personal website showcasing my background, technical skills, and projects as a Computer Science student at the University of Maryland. Built with a React frontend and a Python/FastAPI backend. The site is designed with homage to my hometown, Seattle, with API-driven content and an integrated contact form.
 
 [Visit Website](https://ayush-jain-devportfolio.vercel.app/) · [LinkedIn](https://linkedin.com/in/ayushj8) · [GitHub](https://github.com/ayushj15234)
 
