@@ -19,13 +19,12 @@ def test_skills_and_projects():
 
 
 def test_projects_filter_by_category():
-    assert [p["id"] for p in client.get("/api/projects", params={"category": "web apps"}).json()] == ["portfolio"]
+    assert [p["id"] for p in client.get("/api/projects", params={"category": "mobile apps"}).json()] == ["viewpoint"]
     assert client.get("/api/projects", params={"category": "games"}).json() == []
 
 
 def test_get_one_project():
     assert client.get("/api/projects/viewpoint").json()["title"] == "Viewpoint"
-    assert client.get("/api/projects/portfolio").json()["details"].startswith("The React frontend")
     assert client.get("/api/projects/nope").status_code == 404
 
 

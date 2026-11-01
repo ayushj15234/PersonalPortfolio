@@ -68,16 +68,6 @@ SKILLS = [
 
 PROJECTS = [
     Project(id="viewpoint", title="Viewpoint", category="Mobile apps", tags=["React Native", "Expo"], githubUrl="https://github.com/ayushj15234/Viewpoint", icon="mountain"),
-    Project(
-        id="portfolio",
-        title="Personal Portfolio",
-        description="This site: a React portfolio backed by a FastAPI API.",
-        category="Web apps",
-        tags=["React", "FastAPI"],
-        githubUrl="https://github.com/ayushj15234/PersonalPortfolio",
-        liveUrl="https://ayushjainpersonalportfolio.netlify.app",
-        details="The React frontend is hosted on Netlify and loads its skills and projects from a FastAPI API on Render. Contact messages are validated with Pydantic and delivered by email through Resend.",
-    ),
 ]
 
 MESSAGES: list[SavedMessage] = [
