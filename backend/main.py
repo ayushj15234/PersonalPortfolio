@@ -69,7 +69,10 @@ PROJECTS = [
     Project(id="portfolio", title="Personal Portfolio", category="Web apps", tags=["React", "FastAPI"], githubUrl="https://github.com/ayushj15234/PersonalPortfolio"),
 ]
 
-MESSAGES: list[SavedMessage] = []
+MESSAGES: list[SavedMessage] = [
+    SavedMessage(id=1, name="Sample Visitor", email="sample@example.com", message="Sample message: loved the Viewpoint project!", received_at=datetime(2026, 10, 1, tzinfo=timezone.utc)),
+    SavedMessage(id=2, name="Sample Recruiter", email="recruiter@example.com", message="Sample message: are you open to a summer internship?", received_at=datetime(2026, 10, 15, tzinfo=timezone.utc)),
+]
 
 
 # shortcut: per-process memory that resets on restart, fine for one small server; use Redis if it ever runs on several.

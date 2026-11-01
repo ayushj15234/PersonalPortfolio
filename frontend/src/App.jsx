@@ -2,7 +2,6 @@
 import './App.css'
 import seattleImg from './assets/seattle.jpg'
 import Arrow from './components/Arrow'
-import ContactForm from './components/ContactForm'
 import Projects from './components/Projects'
 import { projects } from './data/projects'
 
@@ -143,13 +142,12 @@ function App() {
         <section id="contact" className="contact section" aria-labelledby="contact-title">
           <div className="contact-actions" data-reveal>
             <h2 id="contact-title">Let's <em>connect</em></h2>
-            <p className="description">Interested in learning and building something together? Send me a message, or reach me directly.</p>
+            <p className="description">Interested in learning and building something together? Reach me directly.</p>
             <a className="card contact-card" href={`mailto:${email}`}><span>Send me an email</span>{email}<Arrow diagonal /></a>
             <a className="card contact-card" href={github} target="_blank" rel="noopener noreferrer"><span>GitHub</span>github.com/ayushj15234<Arrow diagonal /><span className="sr-only"> (opens in a new tab)</span></a>
             <button className="copy-email" type="button" onClick={copyEmail}>Copy email address<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M15 8V4H4v11h4"/></svg></button>
             <p className="copy-status" role="status">{copyStatus}</p>
           </div>
-          <div data-reveal><ContactForm /></div>
         </section>
       </main>
       <footer>
