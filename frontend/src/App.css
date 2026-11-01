@@ -238,9 +238,30 @@ h1.rise { animation-delay: 70ms; }
 .project details p { padding: 8px 0; }
 
 /* Contact */
-.contact { display: grid; grid-template-columns: minmax(0, 640px); }
+.contact { display: grid; grid-template-columns: 1fr 1.1fr; align-items: start; gap: 48px 64px; }
 .contact .description { margin: 16px 0 20px; }
 .contact-actions { display: grid; gap: 12px; }
+.contact-form { display: grid; gap: 18px; padding: 28px; }
+.field { display: grid; gap: 6px; color: #c2cedb; font: 500 13px/1.5 var(--ui-font); }
+.field input, .field textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #2a3b4d;
+  border-radius: 10px;
+  background: #0a121b;
+  color: var(--text);
+  font: 16px/1.5 var(--ui-font); /* 16px stops iOS zooming into the field */
+  transition: border-color 180ms, box-shadow 180ms;
+}
+.field textarea { resize: vertical; min-height: 130px; }
+.field input:focus, .field textarea:focus { outline: none; border-color: var(--green); box-shadow: 0 0 0 3px rgb(83 221 165 / .18); }
+.field [aria-invalid='true'] { border-color: #e07a7a; }
+.field-error, .form-error { color: #f0a0a0; font: 13px/1.5 var(--ui-font); }
+.honeypot { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+.contact-form .button { justify-self: start; }
+.contact-form .button:disabled { opacity: .6; cursor: progress; }
+.contact-sent h3 { font: 400 28px/1.2 var(--display-font); }
+.contact-sent p { color: var(--muted); }
 .contact-card {
   display: grid;
   grid-template-columns: 1fr auto;

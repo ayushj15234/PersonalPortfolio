@@ -1,15 +1,15 @@
 # Ayush Jain | Personal Portfolio
 
-A full-stack personal website showcasing my background, technical skills, and projects as a Computer Science student at the University of Maryland. Built with a React frontend and a Python/FastAPI backend. The site is designed with homage to my hometown, Seattle.
+A full-stack personal website showcasing my background, technical skills, and projects as a Computer Science student at the University of Maryland. Built with a React frontend and a Python/FastAPI backend. The site is designed with homage to my hometown, Seattle, with an integrated contact form.
 
 [Visit Website](https://ayushjainpersonalportfolio.netlify.app/) · [LinkedIn](https://linkedin.com/in/ayushj8) · [GitHub](https://github.com/ayushj15234)
 
 ## Features
 
 - **Project showcase:** Project cards support technology tags, external links, expandable details, and category filters when multiple categories are available.
-- **Contact API:** A FastAPI endpoint validates messages with Pydantic, sends them through Resend, and blocks spam with a hidden honeypot field and IP-based rate limiting.
+- **Contact form:** Visitor messages are sent through Resend, with Pydantic validation, a hidden honeypot field, and IP-based rate limiting.
 - **Interactive navigation:** Scroll-aware section highlighting, animated section reveals, and a collapsible navigation menu.
-- **Accessible interactions:** Skip navigation, descriptive labels, and keyboard-friendly controls.
+- **Accessible interactions:** Skip navigation, descriptive labels, and form error messages with sending, success and error states.
 
 ## Tech Stack
 
@@ -23,9 +23,9 @@ A full-stack personal website showcasing my background, technical skills, and pr
 
 ## How It Works
 
-The repository has two apps: the React site in `frontend/` and the FastAPI API in `backend/`. The site renders its skills and projects itself and does not call the API yet. The API's contact endpoint validates a message with Pydantic, emails it through Resend and keeps a copy in memory. The Resend API key stays on the server.
+The repository has two apps: the React site in `frontend/` and the FastAPI API in `backend/`. The site renders its skills and projects itself, so it works without the API. The contact form posts to the API, which validates the message with Pydantic, emails it through Resend and keeps a copy in memory. The Resend API key stays on the server.
 
-The API keeps its data (skills, projects and received messages) in in-memory Python lists in `backend/main.py`; there is no database, so anything other than the hardcoded sample data is lost when the server restarts.
+The API keeps its data (skills, projects and received messages) in in-memory Python lists in `backend/main.py`; there is no database, so received messages are lost when the server restarts.
 
 ## Run Locally
 
@@ -76,7 +76,13 @@ npm run dev
 
 Open the local URL printed by Vite, typically `http://localhost:5173`.
 
-The frontend does not need the backend to run. Without a configured Resend key, the contact endpoint returns a service-unavailable response.
+The frontend defaults to `http://127.0.0.1:8000` for API requests. To use a different backend, create `frontend/.env.local`:
+
+```dotenv
+VITE_API_URL=http://127.0.0.1:8000
+```
+
+Restart Vite after changing environment variables. The backend only needs to be running for the contact form. Without a configured Resend key, the contact endpoint returns a service-unavailable response.
 
 ## API Endpoints
 
@@ -136,7 +142,7 @@ Project entries support `id`, `title`, `description`, `category`, `tags`, `image
 
 ## Deployment Configuration
 
-Deploy the frontend and backend separately. The frontend deploys to Netlify using `netlify.toml`, which builds from `frontend/`. Add any frontend origin that calls the API to the backend's comma-separated `ALLOWED_ORIGINS` setting.
+Deploy the frontend and backend separately; the frontend deploys to Netlify using `netlify.toml`, which builds from `frontend/`. Set `VITE_API_URL` to the deployed backend URL before building the frontend, and add the deployed frontend origin to the backend's comma-separated `ALLOWED_ORIGINS` setting.
 
 Keep `RESEND_API_KEY`, `CONTACT_TO`, and `CONTACT_FROM` in the backend environment. The current in-memory rate limiter is intended for a single server process; a multi-instance deployment needs shared rate-limit storage.
 
