@@ -2,7 +2,7 @@
 
 A full-stack personal website showcasing my background, technical skills, and projects as a Computer Science student at the University of Maryland. Built with a React frontend and a Python/FastAPI backend. The site is designed with homage to my hometown, Seattle.
 
-[Visit Website](https://ayush-jain-devportfolio.vercel.app/) · [LinkedIn](https://linkedin.com/in/ayushj8) · [GitHub](https://github.com/ayushj15234)
+[Visit Website](https://ayushjainpersonalportfolio.netlify.app/) · [LinkedIn](https://linkedin.com/in/ayushj8) · [GitHub](https://github.com/ayushj15234)
 
 ## Features
 
