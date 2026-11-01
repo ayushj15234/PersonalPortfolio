@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { getJSON } from '../api'
 import Arrow from './Arrow'
 
 function ProjectLink({ href, children }) {
@@ -6,10 +7,41 @@ function ProjectLink({ href, children }) {
   return <a href={href} target="_blank" rel="noopener noreferrer">{children}<Arrow diagonal /><span className="sr-only"> (opens in a new tab)</span></a>
 }
 
-export default function Projects({ projects }) {
+// Fetches the full project from GET /api/projects/{id} the first time it's opened.
+function ProjectDetails({ id }) {
+  const [state, setState] = useState({ status: 'idle' })
+
+  async function load(event) {
+    if (!event.currentTarget.open || state.status === 'done') return
+    setState({ status: 'loading' })
+    const project = await getJSON(`/api/projects/${encodeURIComponent(id)}`)
+    setState(project ? { status: 'done', text: project.details } : { status: 'error' })
+  }
+
+  return (
+    <details onToggle={load}>
+      <summary>Behind the project</summary>
+      <p aria-live="polite">{state.status === 'done' ? state.text : state.status === 'error' ? "Couldn't load the details. Check your connection, then close and reopen this to try again." : 'Loading…'}</p>
+    </details>
+  )
+}
+
+export default function Projects({ projects: fallbackProjects }) {
+  const [projects, setProjects] = useState(fallbackProjects)
   const [filter, setFilter] = useState('All')
+  const [filtered, setFiltered] = useState(null)
   const categories = ['All', ...new Set(projects.map(project => project.category).filter(Boolean))]
-  const visibleProjects = filter === 'All' ? projects : projects.filter(project => project.category === filter)
+  // Use the API's answer for the current filter; filter locally while it loads or if the API is down.
+  const visibleProjects = filter === 'All' ? projects : filtered?.filter === filter && filtered.data ? filtered.data : projects.filter(project => project.category === filter)
+
+  useEffect(() => {
+    getJSON('/api/projects').then(data => data && setProjects(data))
+  }, [])
+
+  useEffect(() => {
+    if (filter === 'All') return
+    getJSON(`/api/projects?category=${encodeURIComponent(filter)}`).then(data => setFiltered({ filter, data }))
+  }, [filter])
 
   return (
     <section id="projects" className="projects section" aria-labelledby="projects-title">
@@ -43,7 +75,7 @@ export default function Projects({ projects }) {
                 {project.description && <p>{project.description}</p>}
                 {project.tags?.length > 0 && <ul className="project-tags" aria-label="Technologies">{project.tags.map(tag => <li key={tag}>{tag}</li>)}</ul>}
                 <div className="project-links"><ProjectLink href={project.liveUrl}>Live project</ProjectLink><ProjectLink href={project.githubUrl}>View on GitHub</ProjectLink></div>
-                {project.details && <details><summary>Behind the project</summary><p>{project.details}</p></details>}
+                {project.details && project.id && <ProjectDetails id={project.id} />}
               </div>
             </article>
           ))}

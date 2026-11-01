@@ -1,6 +1,16 @@
 // Where the FastAPI server lives. Set VITE_API_URL for the live site (step 7).
 export const API_URL = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'
 
+// Resolves to the parsed JSON, or null if the API can't be reached, so callers can keep their built-in data.
+export async function getJSON(path) {
+  try {
+    const response = await fetch(`${API_URL}${path}`)
+    return response.ok ? await response.json() : null
+  } catch {
+    return null
+  }
+}
+
 const fieldHelp = {
   name: 'Please enter your name.',
   email: 'Please enter a valid email address, like name@example.com.',

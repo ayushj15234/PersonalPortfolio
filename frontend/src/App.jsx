@@ -4,22 +4,34 @@ import seattleImg from './assets/seattle.jpg'
 import Arrow from './components/Arrow'
 import ContactForm from './components/ContactForm'
 import Projects from './components/Projects'
+import { getJSON } from './api'
 import { projects } from './data/projects'
 
 const navigation = [['skills', 'Skills'], ['about', 'About'], ['projects', 'Projects'], ['contact', 'Contact me']]
 const email = 'ayushj8@terpmail.umd.edu'
 const github = 'https://github.com/ayushj15234'
-const skills = [
-  ['Languages', 'What I write in', ['Java', 'Python', 'HTML', 'CSS', 'TypeScript', 'JavaScript'], 'M8 6 2 12l6 6m8-12 6 6-6 6m-2-14-4 16'],
-  ['Frameworks', 'What I build with', ['React', 'React Native', 'Expo', 'Node.js', 'JUnit', 'FastAPI'], 'M12 3 3 8l9 5 9-5-9-5Zm-9 9 9 5 9-5M3 16l9 5 9-5'],
-  ['Tools', 'What I work in', ['Eclipse', 'GitHub', 'VS Code', 'Microsoft Office Suite', 'IntelliJ'], 'M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2.4-.6-.6-2.4 2.6-2.6Z'],
+// Shown until GET /api/skills answers, and kept if the API is unreachable.
+const fallbackSkills = [
+  { category: 'Languages', description: 'What I write in', items: ['Java', 'Python', 'HTML', 'CSS', 'TypeScript', 'JavaScript'] },
+  { category: 'Frameworks', description: 'What I build with', items: ['React', 'React Native', 'Expo', 'Node.js', 'JUnit', 'FastAPI'] },
+  { category: 'Tools', description: 'What I work in', items: ['Eclipse', 'GitHub', 'VS Code', 'Microsoft Office Suite', 'IntelliJ'] },
 ]
+const skillIcons = {
+  Languages: 'M8 6 2 12l6 6m8-12 6 6-6 6m-2-14-4 16',
+  Frameworks: 'M12 3 3 8l9 5 9-5-9-5Zm-9 9 9 5 9-5M3 16l9 5 9-5',
+  Tools: 'M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2.4-.6-.6-2.4 2.6-2.6Z',
+}
 
 function App() {
   const [activeSection, setActiveSection] = useState('home')
   const [menuOpen, setMenuOpen] = useState(false)
+  const [skills, setSkills] = useState(fallbackSkills)
   const [copyStatus, setCopyStatus] = useState('')
   const copyTimer = useRef(null)
+
+  useEffect(() => {
+    getJSON('/api/skills').then(data => data && setSkills(data))
+  }, [])
 
   useEffect(() => {
     let frame = 0
@@ -116,11 +128,11 @@ function App() {
         <section id="skills" className="skills section" aria-labelledby="skills-title">
           <h2 id="skills-title" data-reveal>My <em>toolkit</em></h2>
           <div className="skill-boxes" data-reveal>
-            {skills.map(([group, note, items, icon]) => (
-              <article className="card skill-box" key={group}>
-                <svg className="skill-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={icon} /></svg>
-                <h3>{group}</h3>
-                <p>{note}</p>
+            {skills.map(({ category, description, items }) => (
+              <article className="card skill-box" key={category}>
+                {skillIcons[category] && <svg className="skill-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={skillIcons[category]} /></svg>}
+                <h3>{category}</h3>
+                <p>{description}</p>
                 <ul className="skill-tags">{items.map(skill => <li key={skill}>{skill}</li>)}</ul>
               </article>
             ))}

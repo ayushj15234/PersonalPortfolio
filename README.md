@@ -23,7 +23,7 @@ A full-stack personal website showcasing my background, technical skills, and pr
 
 ## How It Works
 
-The repository has two apps: the React site in `frontend/` and the FastAPI API in `backend/`. The site renders its skills and projects itself, so it works without the API. The contact form posts to the API, which validates the message with Pydantic, emails it through Resend and keeps a copy in memory. The Resend API key stays on the server.
+The repository has two apps: the React site in `frontend/` and the FastAPI API in `backend/`. The site loads its skills and projects from the API, falling back to built-in copies if the API is unreachable, so it never renders empty. The contact form posts to the API, which validates the message with Pydantic, emails it through Resend and keeps a copy in memory. The Resend API key stays on the server.
 
 The API keeps its data (skills, projects and received messages) in in-memory Python lists in `backend/main.py`; there is no database, so received messages are lost when the server restarts.
 
@@ -82,7 +82,7 @@ The frontend defaults to `http://127.0.0.1:8000` for API requests. To use a diff
 VITE_API_URL=http://127.0.0.1:8000
 ```
 
-Restart Vite after changing environment variables. The backend only needs to be running for the contact form. Without a configured Resend key, the contact endpoint returns a service-unavailable response.
+Restart Vite after changing environment variables. Without the backend, the site shows its built-in skills and projects and the contact form reports that it can't reach the server. Without a configured Resend key, the contact endpoint returns a service-unavailable response.
 
 ## API Endpoints
 
@@ -132,8 +132,8 @@ The test suite covers skills and project responses, project lookup and filtering
 
 ## Customization
 
-- **Skills:** Update `skills` in `frontend/src/App.jsx`.
-- **Projects:** Add or edit entries in `frontend/src/data/projects.js`.
+- **Skills:** Update `SKILLS` in `backend/main.py`, and the fallback copy `fallbackSkills` in `frontend/src/App.jsx`.
+- **Projects:** Update `PROJECTS` in `backend/main.py`, and the fallback copy in `frontend/src/data/projects.js`.
 - **Profile and navigation:** Edit `frontend/src/App.jsx`.
 - **Styling:** Update `frontend/src/App.css` and `frontend/src/index.css`.
 - **Project images:** Place images in `frontend/public/projects/` and reference them using paths such as `/projects/my-project.png`.
