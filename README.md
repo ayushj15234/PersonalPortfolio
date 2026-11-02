@@ -31,7 +31,7 @@ The API keeps its data (skills, projects and received messages) in in-memory Pyt
 
 ### Prerequisites
 
-- A Node.js version compatible with the Vite version in `package.json`, plus npm
+- Node.js 20.19+ or 22.12+ (required by Vite 8), plus npm
 - [uv](https://docs.astral.sh/uv/), which installs the right Python version for you
 - A Resend API key for contact form email delivery
 
