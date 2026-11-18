@@ -145,7 +145,7 @@ function App() {
             <a className="text-link" href="#contact">Let's get to know each other <Arrow /></a>
           </div>
           <div data-reveal>
-            <p className="lead">I'm Ayush, a computer science student at the University of Maryland minoring in business analytics.</p>
+            <p className="lead">I'm Ayush, a computer science and business analytics student at the University of Maryland.</p>
             <p className="description">I'm passionate about building useful applications and learning how business, technology, and AI connect. Outside of school, I love watching and playing sports, especially football, basketball, soccer, and baseball.</p>
           </div>
         </section>
